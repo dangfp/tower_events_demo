@@ -1,0 +1,14 @@
+<%# TODO: 调整页面布局及样式 %>
+<h1>动态</h1>
+
+<% @events.each do |e| %>
+  <h2><%= e[:date] %></h2>
+  <% e[:items].each do |item| %>
+    <h3><a href=<%= get_ancestor_show_path(item[:ancestor_id], item[:ancestor_type]) %> target="_blank"><%= item[:ancestor_name] %></a></h3>
+    <% item[:events].each do |event| %>
+      <%= render partial: "#{event[:trackable_type].downcase}", locals: { event: event } %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%# TODO: 补充分页 %>
