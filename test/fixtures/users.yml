@@ -1,0 +1,4 @@
+user_1:
+  name: 'user_1'
+  email: 'user_1@test.com'
+  password_digest: '$2a$10$MFMOP0vOHYGn/qxFUbtwzO2P8P5QzCuj3kzXt6dNHStms99k.zjY2'

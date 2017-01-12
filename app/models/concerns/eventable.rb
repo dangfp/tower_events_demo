@@ -3,12 +3,11 @@ module Eventable
 
   included do
     # TODO: 应动态获取，暂时硬编码
-    current_team ||= Team.find 1
-    current_user ||= User.find 1
-
+    RequestStore.store[:current_team] ||= Team.last
+    RequestStore.store[:current_user] ||= User.last
     after_create :event_on_create
     after_update :event_on_update, if: Proc.new { need_create_event_on_update? }
-    after_destroy :event_on_destroy
+    after_destroy :event_on_destroy, if: Proc.new { need_create_event_on_destroy? }
 
     private
 
@@ -47,13 +46,17 @@ module Eventable
       false
     end
 
+    def need_create_event_on_destroy?
+      false
+    end
+
     def create_event(indirect_data)
       attrs = {
-        team_id: current_team.id,
+        team_id: RequestStore.store[:current_team].id,
         resource_id: resource.id,
-        actor_id: current_user.id,
-        actor_name: current_user.name,
-        actor_avatar: current_user.avatar || 'defalult_avatar.jpg',
+        actor_id: RequestStore.store[:current_user].id,
+        actor_name: RequestStore.store[:current_user].name,
+        actor_avatar: RequestStore.store[:current_user].avatar || 'defalult_avatar.jpg',
         trackable_id: id,
         trackable_type: self.class.name,
         trackable_name: indirect_data[:trackable_name],
