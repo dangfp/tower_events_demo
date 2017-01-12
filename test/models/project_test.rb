@@ -1,0 +1,56 @@
+require 'test_helper'
+
+class ProjectTest < ActiveSupport::TestCase
+  setup do
+    RequestStore.store[:current_user] ||= users(:user_1)
+    RequestStore.store[:current_team] ||= teams(:team_1)
+    @current_user = RequestStore.store[:current_user]
+    @current_team = RequestStore.store[:current_team]
+    @project      = projects(:project_1)
+  end
+
+  test 'should create an event after create a new project' do
+    project  = Project.create(team_id: @current_team.id, name: 'project_1', creator_id: @current_user.id, project_type: 1, status: 'status_fresh')
+    event    = Event.last
+    resource = Resource.last
+
+    assert_equal event.team_id, @current_team.id
+    assert_equal event.resource_id, resource.id
+    assert_equal event.actor_id, @current_user.id
+    assert_equal event.action, 'project_create'
+    assert_equal event.trackable_id, project.id
+    assert_equal event.trackable_type, project.class.name
+    assert_equal event.trackable_name, project.name
+    assert_equal event.ancestor_id, project.id
+    assert_equal event.ancestor_type, project.class.name
+    assert_equal event.ancestor_name, project.name
+  end
+
+  test 'should not create an event after change project name' do
+    assert_no_difference('Event.count') do
+      @project.update(name: 'change name')
+    end
+  end
+
+  test 'should create an event after change project status' do
+    @project.update(status: "status_start")
+    event = Event.last
+
+    assert_equal event.team_id, @current_team.id
+    assert_equal event.resource_id, @project.resource.id
+    assert_equal event.actor_id, @current_user.id
+    assert_equal event.action, "project_status_start"
+    assert_equal event.trackable_id, @project.id
+    assert_equal event.trackable_type, @project.class.name
+    assert_equal event.trackable_name, @project.name
+    assert_equal event.ancestor_id, @project.id
+    assert_equal event.ancestor_type, @project.class.name
+    assert_equal event.ancestor_name, @project.name
+  end
+
+  test 'should create an event after destroy project' do
+    assert_difference('Event.count') do
+      @project.destroy
+    end
+  end
+end

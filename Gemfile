@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 
+# Soft delete
+gem 'paranoia', '~> 2.2'
 # Per-request global storage for Rack.
 gem 'request_store', '~> 1.3', '>= 1.3.2'
 
