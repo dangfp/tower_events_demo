@@ -1,6 +1,6 @@
 project_1:
-  team_id: team_1.id
-  creator_id: user_1.id
+  team_id: <%= ActiveRecord::FixtureSet.identify(:team_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
   name: 'project_1'
   project_type: 1
   status: 'status_fresh'

@@ -10,7 +10,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   test 'should create an event after create a new project' do
-    project  = Project.create(team_id: @current_team.id, name: 'project_1', creator_id: @current_user.id, project_type: 1, status: 'status_fresh')
+    project  = Project.create(team_id: @current_team.id, name: 'create_project', creator_id: @current_user.id, project_type: 1, status: 'status_fresh')
     event    = Event.last
     resource = Resource.last
 
@@ -52,5 +52,11 @@ class ProjectTest < ActiveSupport::TestCase
     assert_difference('Event.count') do
       @project.destroy
     end
+  end
+
+  test 'destroy project should soft delete' do
+    @project.destroy
+    @project.reload
+    assert_not_nil @project.deleted_at
   end
 end

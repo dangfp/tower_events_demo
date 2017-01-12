@@ -1,0 +1,5 @@
+todo_1:
+  project_id: <%= ActiveRecord::FixtureSet.identify(:project_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
+  name: 'todo_1'
+  status: 'status_fresh'

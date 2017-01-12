@@ -1,11 +1,10 @@
-class Team < ApplicationRecord
+class Todo < ApplicationRecord
   include Resourceable
   include Eventable
 
+  acts_as_paranoid
+
   has_one :resource, as: :resourceable
   has_many :track, as: :trackable
-
-  after_create do |team|
-    RequestStore.store[:current_team] = team
-  end
+  belongs_to :project
 end

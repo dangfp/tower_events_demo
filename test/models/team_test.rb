@@ -7,7 +7,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test 'should create an event after create a new team' do
-    team     = Team.create(title: 'team_1', creator_id: @current_user.id)
+    team     = Team.create(title: 'create_team', creator_id: @current_user.id)
     event    = Event.last
     resource = Resource.last
 
