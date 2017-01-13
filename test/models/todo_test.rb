@@ -23,7 +23,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, 'todo_create'
+    assert_equal event.action, 'create'
     assert_equal event.trackable_id, todo.id
     assert_equal event.trackable_type, todo.class.name
     assert_equal event.trackable_name, todo.name
@@ -39,7 +39,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, 'todo_create'
+    assert_equal event.action, 'create'
     assert_equal event.trackable_id, todo.id
     assert_equal event.trackable_type, todo.class.name
     assert_equal event.trackable_name, todo.name
@@ -69,7 +69,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_assignee"
+    assert_equal event.action, "set_assignee"
     assert_equal event.trackable_id, @todo.id
     assert_equal event.trackable_type, @todo.class.name
     assert_equal event.trackable_name, @todo.name
@@ -88,7 +88,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_due"
+    assert_equal event.action, "set_due"
     assert_equal event.trackable_id, @todo.id
     assert_equal event.trackable_type, @todo.class.name
     assert_equal event.trackable_name, @todo.name
@@ -106,7 +106,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_status_start"
+    assert_equal event.action, "status_start"
     assert_equal event.trackable_id, @todo.id
     assert_equal event.trackable_type, @todo.class.name
     assert_equal event.trackable_name, @todo.name
@@ -125,7 +125,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_status_pause"
+    assert_equal event.action, "status_pause"
     assert_equal event.trackable_id, todo.id
     assert_equal event.trackable_type, todo.class.name
     assert_equal event.trackable_name, todo.name
@@ -144,7 +144,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_status_completed"
+    assert_equal event.action, "status_completed"
     assert_equal event.trackable_id, todo.id
     assert_equal event.trackable_type, todo.class.name
     assert_equal event.trackable_name, todo.name
@@ -163,7 +163,7 @@ class TodoTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "todo_status_reopen"
+    assert_equal event.action, "status_reopen"
     assert_equal event.trackable_id, todo.id
     assert_equal event.trackable_type, todo.class.name
     assert_equal event.trackable_name, todo.name

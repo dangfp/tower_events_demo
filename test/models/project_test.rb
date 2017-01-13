@@ -17,7 +17,7 @@ class ProjectTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, 'project_create'
+    assert_equal event.action, 'create'
     assert_equal event.trackable_id, project.id
     assert_equal event.trackable_type, project.class.name
     assert_equal event.trackable_name, project.name
@@ -40,7 +40,7 @@ class ProjectTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "project_status_archived"
+    assert_equal event.action, "status_archived"
     assert_equal event.trackable_id, @project.id
     assert_equal event.trackable_type, @project.class.name
     assert_equal event.trackable_name, @project.name
@@ -58,7 +58,7 @@ class ProjectTest < ActiveSupport::TestCase
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "project_status_activated"
+    assert_equal event.action, "status_activated"
     assert_equal event.trackable_id, @project.id
     assert_equal event.trackable_type, @project.class.name
     assert_equal event.trackable_name, @project.name

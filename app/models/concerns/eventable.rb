@@ -6,8 +6,8 @@ module Eventable
     ATTRS_OF_CREATE_EVENT_ON_UPDATE_TODO = %w(assignee_id due status).freeze
 
     # TODO: 应动态获取，暂时硬编码
-    RequestStore.store[:current_team] ||= Team.last
-    RequestStore.store[:current_user] ||= User.last
+    RequestStore.store[:current_team] ||= Team.first
+    RequestStore.store[:current_user] ||= User.first
 
     after_create :event_on_create
     after_update :event_on_update, if: :need_create_event_on_update?

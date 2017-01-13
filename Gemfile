@@ -36,6 +36,8 @@ gem 'paranoia', '~> 2.2'
 gem 'request_store', '~> 1.3', '>= 1.3.2'
 # AASM is a continuation of the acts-as-state-machine rails plugin, built for plain Ruby objects.
 gem 'aasm', '~> 4.11'
+# Kaminari is a Scope & Engine based, clean, powerful, agnostic, customizable and sophisticated paginator for Rails 4+
+gem 'kaminari', '~> 1.0'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

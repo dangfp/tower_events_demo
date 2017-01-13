@@ -17,8 +17,8 @@ module EventsHelper
   end
 
   def format_set_assignee_for_display(data)
-    prev  = data[:assignee_name][:prev]
-    after = data[:assignee_name][:after]
+    prev  = data['assignee_name']['prev']
+    after = data['assignee_name']['after']
 
     return "给 #{after} 指派了任务" if prev.nil?
     return "取消了 #{prev} 的任务" if after.nil?
@@ -26,8 +26,8 @@ module EventsHelper
   end
 
   def format_set_due_for_display(data)
-    prev  = data[:due][:prev]
-    after = data[:due][:after]
+    prev  = data['due']['prev']
+    after = data['due']['after']
 
     return "将任务完成时间从 没有截止日期 修改为 #{after}" if prev.nil?
     return "将任务完成时间从 #{prev} 修改为 没有截止日期" if after.nil?
