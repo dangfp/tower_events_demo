@@ -16,3 +16,7 @@
 
 * How to run the test suite
    1. `bundle exec rake test test/`
+
+## Event说明
+* 使用方法
+  1. 自动创建 event: `include Eventable`
