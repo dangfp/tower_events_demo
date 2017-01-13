@@ -3,3 +3,27 @@ todo_1:
   creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
   name: 'todo_1'
   status: 'status_fresh'
+
+status_start_todo:
+  project_id: <%= ActiveRecord::FixtureSet.identify(:project_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
+  name: 'status_start_todo'
+  status: 'status_start'
+
+status_pause_todo:
+  project_id: <%= ActiveRecord::FixtureSet.identify(:project_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
+  name: 'status_pause_todo'
+  status: 'status_pause'
+
+status_completed_todo:
+  project_id: <%= ActiveRecord::FixtureSet.identify(:project_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
+  name: 'status_completed_todo'
+  status: 'status_completed'
+
+status_reopen_todo:
+  project_id: <%= ActiveRecord::FixtureSet.identify(:project_1) %>
+  creator_id: <%= ActiveRecord::FixtureSet.identify(:user_1) %>
+  name: 'status_reopen_todo'
+  status: 'status_reopen'
