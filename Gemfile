@@ -34,6 +34,8 @@ gem 'bcrypt', '~> 3.1', '>= 3.1.11'
 gem 'paranoia', '~> 2.2'
 # Per-request global storage for Rack.
 gem 'request_store', '~> 1.3', '>= 1.3.2'
+# AASM is a continuation of the acts-as-state-machine rails plugin, built for plain Ruby objects.
+gem 'aasm', '~> 4.11'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

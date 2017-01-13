@@ -10,7 +10,7 @@ class ProjectTest < ActiveSupport::TestCase
   end
 
   test 'should create an event after create a new project' do
-    project  = Project.create(team_id: @current_team.id, name: 'create_project', creator_id: @current_user.id, project_type: 1, status: 'status_fresh')
+    project  = Project.create(team_id: @current_team.id, name: 'create_project', creator_id: @current_user.id, project_type: 1)
     event    = Event.last
     resource = Resource.last
 
@@ -32,14 +32,33 @@ class ProjectTest < ActiveSupport::TestCase
     end
   end
 
-  test 'should create an event after change project status' do
-    @project.update(status: "status_start")
-    event = Event.last
+  test 'should create an event after archiving' do
+    @project.do_archive!
+    assert @project.status_archived?
 
+    event = Event.last
     assert_equal event.team_id, @current_team.id
     assert_equal event.resource_id, @project.resource.id
     assert_equal event.actor_id, @current_user.id
-    assert_equal event.action, "project_status_start"
+    assert_equal event.action, "project_status_archived"
+    assert_equal event.trackable_id, @project.id
+    assert_equal event.trackable_type, @project.class.name
+    assert_equal event.trackable_name, @project.name
+    assert_equal event.ancestor_id, @project.id
+    assert_equal event.ancestor_type, @project.class.name
+    assert_equal event.ancestor_name, @project.name
+  end
+
+  test 'should create an event after activating' do
+    @project.do_archive!
+    @project.do_activate!
+    assert @project.status_activated?
+
+    event = Event.last
+    assert_equal event.team_id, @current_team.id
+    assert_equal event.resource_id, @project.resource.id
+    assert_equal event.actor_id, @current_user.id
+    assert_equal event.action, "project_status_activated"
     assert_equal event.trackable_id, @project.id
     assert_equal event.trackable_type, @project.class.name
     assert_equal event.trackable_name, @project.name
