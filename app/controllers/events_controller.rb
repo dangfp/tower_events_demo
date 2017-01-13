@@ -1,18 +1,14 @@
 class EventsController < ApplicationController
   def index
-    # TODO: 所需环境变量和筛选参数应动态获取，目前为了演示暂时硬编码
-    current_team ||= Team.find 1
-    current_user ||= User.find 1
-    resource_ids = [1, 2]
-    user_id     = nil
+    resource_ids = current_user.resource_ids
+    user_id      = nil # 筛选某特定用户的动态，具体功能后续实现
 
     query_term = if user_id
-                   Event.where(team_id: current_team.id, resource_id: resource_ids, user_id: user_id)
+                   Event.where(team_id: params[:team_id], resource_id: resource_ids, actor_id: user_id)
                  else
-                   Event.where(team_id: current_team.id, resource_id: resource_ids)
+                   Event.where(team_id: params[:team_id], resource_id: resource_ids)
                  end
-    # TODO: 应补充分页
-    events_arr = query_term.select(:id, :team_id, :created_at, :actor_id, :actor_name, :actor_avatar, :action, :trackable_id, :trackable_type, :trackable_name, :ancestor_id, :ancestor_type, :ancestor_name, :data).order(created_at: :desc).first(50)
+    events_arr = query_term.select(:id, :team_id, :created_at, :actor_id, :actor_name, :actor_avatar, :action, :trackable_id, :trackable_type, :trackable_name, :ancestor_id, :ancestor_type, :ancestor_name, :data).order(created_at: :desc).page(params[:page]).per(50)
     @events = assemble_events(events_arr)
   end
 
@@ -29,7 +25,7 @@ class EventsController < ApplicationController
   #         "ancestor_type": "project",
   #         "ancestor_name": "first project",
   #         "events": [
-  #           {
+  #           { # event详情，此处罗列两项作为说明
   #             "action": "aaa",
   #             "actor_id": 1
   #           },
