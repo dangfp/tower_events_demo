@@ -1,0 +1,10 @@
+<%# TODO: 调整页面布局、样式 %>
+<div>
+  <ul>
+    <li><%= event.created_at.strftime('%F') %></li>
+    <li><%= event.actor_name %></li>
+    <li><%= event.actor_avatar %></li>
+    <li><%= format_action_for_display(event.action, event.trackable_type, event.data) %></li>
+    <li><a href=<%= get_tracking_obj_detail_url(event.trackable_id, event.trackable_type) %> ><%= event.trackable_name %></a></li>
+  </ul>
+</div>

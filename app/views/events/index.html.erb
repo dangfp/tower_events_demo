@@ -6,7 +6,7 @@
   <% e[:items].each do |item| %>
     <h3><a href=<%= get_ancestor_show_path(item[:ancestor_id], item[:ancestor_type]) %> target="_blank"><%= item[:ancestor_name] %></a></h3>
     <% item[:events].each do |event| %>
-      <%= render partial: "#{event[:trackable_type].downcase}", locals: { event: event } %>
+      <%= render partial: 'detail', locals: { event: event } %>
     <% end %>
   <% end %>
 <% end %>

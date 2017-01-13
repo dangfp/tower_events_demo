@@ -44,7 +44,7 @@ module Eventable
       {
         ancestor: { id: id, type: type, name: title },
         trackable_name: title,
-        action: "#{type.downcase}_#{on}"
+        action: "#{on}"
       }
     end
 
@@ -59,9 +59,9 @@ module Eventable
 
     def get_action_of_project(on)
       if on == 'update'
-        "project_#{status}"
+        "#{status}"
       else
-        "project_#{on}"
+        "#{on}"
       end
     end
     ## end
@@ -76,7 +76,7 @@ module Eventable
                             ancestor: { id: project.id, type: project.class.name, name: project.name },
                             trackable_name: name,
                             action: a_d[:action],
-                            data: a_d[:data] ? a_d[:data].merge!(priority: priority, tag: tag) : { priority: priority, tag: tag } # 任务的优先级、标签均作为附加数据
+                            data: a_d[:data] ? a_d[:data].merge!("priority": priority, "tag": tag) : { "priority": priority, "tag": tag } # 任务的优先级、标签均作为附加数据
                           }
       end
       indirect_data
@@ -89,42 +89,42 @@ module Eventable
           actions_and_data_arr << case k
                                   when 'assignee_id'
                                     {
-                                      action: 'todo_assignee',
+                                      action: 'set_assignee',
                                       data: {
-                                        assignee_id: {
-                                          prev: changes[k].first,
-                                          after: changes[k].last
+                                        "assignee_id": {
+                                          "prev": changes[k].first,
+                                          "after": changes[k].last
                                         },
-                                        assignee_name: {
-                                          prev: changes['assignee_name'].first,
-                                          after: changes['assignee_name'].last
+                                        "assignee_name": {
+                                          "prev": changes['assignee_name'].first,
+                                          "after": changes['assignee_name'].last
                                         }
                                       }
                                     }
                                   when 'due'
                                     {
-                                      action: 'todo_due',
+                                      action: 'set_due',
                                       data: {
-                                        due: {
-                                          prev: changes[k].first.try(:strftime, '%F'),
-                                          after: changes[k].last.try(:strftime, '%F')
+                                        "due": {
+                                          "prev": changes[k].first.try(:strftime, '%F'),
+                                          "after": changes[k].last.try(:strftime, '%F')
                                         }
                                       }
                                     }
                                   when 'status'
                                     {
-                                      action: "todo_#{changes[k].last}",
+                                      action: "#{changes[k].last}",
                                       data: {
-                                        status: {
-                                          prev: changes[k].first,
-                                          after: changes[k].last
+                                        "status": {
+                                          "prev": changes[k].first,
+                                          "after": changes[k].last
                                         }
                                       }
                                     }
                                   end
         end
       else
-        actions_and_data_arr << { action: "todo_#{on}" }
+        actions_and_data_arr << { action: "#{on}" }
       end
       actions_and_data_arr
     end

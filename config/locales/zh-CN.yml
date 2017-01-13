@@ -1,0 +1,23 @@
+zh-CN:
+  activerecord:
+    attributes:
+      event:
+        team:
+          action_enum:
+            create: '创建了团队'
+        project:
+          action_enum:
+            create: '创建了项目'
+            destroy: '删除了项目'
+          status_enum:
+            status_archived: '归档了项目'
+            status_activated: '激活了项目'
+        todo:
+          action_enum:
+            create: '创建了任务'
+            destroy: '删除了任务'
+          status_enum:
+            status_start: '开始处理这条任务'
+            status_pause: ' 暂停处理这条任务'
+            status_completed: '完成了任务'
+            status_reopen: '重新打开了任务'
