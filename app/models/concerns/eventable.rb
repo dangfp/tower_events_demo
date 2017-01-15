@@ -30,21 +30,14 @@ module Eventable
     # 按照动态信息的特定要求对不同对象的不同动的相关信息作进行整理，以便后续以统一方式进行存储
     def get_indirect_data(on)
       type = self.class.name
-      indirect_data = case type
-                      when 'Team'
-                        get_indirect_data_of_team(on, type)
-                      when 'Project'
-                        get_indirect_data_of_project(on, type)
-                      when 'Todo'
-                        get_indirect_data_of_todo(on, type)
-                      end
+      indirect_data = send("get_indirect_data_of_#{type.downcase}", on, type)
     end
 
     def get_indirect_data_of_team(on, type)
       {
         ancestor: { id: id, type: type, name: title },
         trackable_name: title,
-        action: "#{on}"
+        action: on
       }
     end
 
@@ -58,17 +51,13 @@ module Eventable
     end
 
     def get_action_of_project(on)
-      if on == 'update'
-        "#{status}"
-      else
-        "#{on}"
-      end
+      on == 'update' ? status : on
     end
     ## end
 
     ## begin todo相关处理逻辑
     # 任务的祖先应为所属项目
-    # 任务在创建时可以同时设置名称、优先级、标签、执行者以及到期时间，但只记录创建动作的动态信息，所以不再另外设置执行者和到期时间两个动作的动态信息
+    # 任务在创建时可以同时设置名称、优先级、标签、执行者以及到期时间，但需只记录[创建]一个动作的动态信息，所以不再另外记录[设置执行者]和[到期时间]两个动作的动态信息
     def get_indirect_data_of_todo(on, type)
       indirect_data = []
       get_action_and_data_of_todo(on).each do |a_d|
@@ -83,48 +72,46 @@ module Eventable
     end
 
     def get_action_and_data_of_todo(on)
+      return [{ action: on }] unless on == 'update'
+
       actions_and_data_arr = []
-      if on == 'update'
-        (ATTRS_OF_CREATE_EVENT_ON_UPDATE_TODO & changes.keys).each do |k|
-          actions_and_data_arr << case k
-                                  when 'assignee_id'
-                                    {
-                                      action: 'set_assignee',
-                                      data: {
-                                        "assignee_id": {
-                                          "prev": changes[k].first,
-                                          "after": changes[k].last
-                                        },
-                                        "assignee_name": {
-                                          "prev": changes['assignee_name'].first,
-                                          "after": changes['assignee_name'].last
-                                        }
+      (ATTRS_OF_CREATE_EVENT_ON_UPDATE_TODO & changes.keys).each do |k|
+        actions_and_data_arr << case k
+                                when 'assignee_id'
+                                  {
+                                    action: 'set_assignee',
+                                    data: {
+                                      "assignee_id": {
+                                        "prev": changes[k].first,
+                                        "after": changes[k].last
+                                      },
+                                      "assignee_name": {
+                                        "prev": changes['assignee_name'].first,
+                                        "after": changes['assignee_name'].last
                                       }
                                     }
-                                  when 'due'
-                                    {
-                                      action: 'set_due',
-                                      data: {
-                                        "due": {
-                                          "prev": changes[k].first.try(:strftime, '%F'),
-                                          "after": changes[k].last.try(:strftime, '%F')
-                                        }
+                                  }
+                                when 'due'
+                                  {
+                                    action: 'set_due',
+                                    data: {
+                                      "due": {
+                                        "prev": changes[k].first.try(:strftime, '%F'),
+                                        "after": changes[k].last.try(:strftime, '%F')
                                       }
                                     }
-                                  when 'status'
-                                    {
-                                      action: "#{changes[k].last}",
-                                      data: {
-                                        "status": {
-                                          "prev": changes[k].first,
-                                          "after": changes[k].last
-                                        }
+                                  }
+                                when 'status'
+                                  {
+                                    action: "#{changes[k].last}",
+                                    data: {
+                                      "status": {
+                                        "prev": changes[k].first,
+                                        "after": changes[k].last
                                       }
                                     }
-                                  end
-        end
-      else
-        actions_and_data_arr << { action: "#{on}" }
+                                  }
+                                end
       end
       actions_and_data_arr
     end
