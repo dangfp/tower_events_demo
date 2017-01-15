@@ -96,8 +96,8 @@ module Eventable
                                     action: 'set_due',
                                     data: {
                                       "due": {
-                                        "prev": changes[k].first.try(:strftime, '%F'),
-                                        "after": changes[k].last.try(:strftime, '%F')
+                                        "prev": changes[k].first&.strftime('%F'),
+                                        "after": changes[k].last&.strftime('%F')
                                       }
                                     }
                                   }

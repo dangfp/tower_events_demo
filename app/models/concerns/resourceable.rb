@@ -3,7 +3,7 @@ module Resourceable
 
   included do
     after_create do |obj|
-      Resource.create!(resourceable_id: obj.id, resourceable_type: obj.class.name)
+      Resource.create!(resourceable: obj)
     end
   end
 end

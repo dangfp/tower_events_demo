@@ -79,6 +79,6 @@ module AssembleEventsForDisplay
 
   # 定义连续的判断标准
   def consecutive?(x,y)
-    x.try(:ancestor_id) == y.try(:ancestor_id)
+    x&.ancestor_id == y&.ancestor_id
   end
 end
