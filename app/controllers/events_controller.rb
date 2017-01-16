@@ -10,7 +10,7 @@ class EventsController < ApplicationController
                  else
                    Event.where(team_id: params[:team_id], resource_id: resource_ids)
                  end
-    events_arr = query_term.select(:id, :team_id, :created_at, :actor_id, :actor_name, :actor_avatar, :action, :trackable_id, :trackable_type, :trackable_name, :ancestor_id, :ancestor_type, :ancestor_name, :data).order(created_at: :desc).page(params[:page]).per(50)
+    events_arr = query_term.select(:id, :team_id, :created_at, :actor_id, :actor_name, :actor_avatar, :action, :trackable_id, :trackable_type, :trackable_name, :ancestor_id, :ancestor_type, :ancestor_name, :data).order(id: :desc).page(params[:page]).per(50)
     @events = assemble(events_arr)
   end
 end
