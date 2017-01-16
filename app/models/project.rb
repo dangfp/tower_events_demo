@@ -9,7 +9,6 @@ class Project < ApplicationRecord
   enum project_type: { type_normal: 0, project_type_kanban: 1 }
 
   has_one :resource, as: :resourceable
-  has_many :track, as: :trackable
 
   # 项目状态机
   aasm column: :status, no_direct_assignment: true do

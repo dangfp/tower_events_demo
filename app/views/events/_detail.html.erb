@@ -1,7 +1,7 @@
 <%# TODO: 调整页面布局、样式 %>
 <div>
   <ul>
-    <li><%= event.created_at.strftime('%T') %></li>
+    <li><%= event.created_at.strftime('%R') %></li>
     <li><%= event.actor_name %></li>
     <li><%= event.actor_avatar %></li>
     <li><%= format_action_for_display(event.action, event.trackable_type, event.data) %></li>

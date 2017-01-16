@@ -5,6 +5,8 @@ module Eventable
     OBJS_OF_CREATE_EVENT_ON_DESTROY      = %w(Project Todo).freeze
     ATTRS_OF_CREATE_EVENT_ON_UPDATE_TODO = %w(assignee_id due status).freeze
 
+    has_many :tracks, as: :trackable
+
     # TODO: 应动态获取，暂时硬编码
     RequestStore.store[:current_team] ||= Team.first
     RequestStore.store[:current_user] ||= User.first

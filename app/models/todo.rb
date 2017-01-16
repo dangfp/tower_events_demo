@@ -4,7 +4,6 @@ class Todo < ApplicationRecord
 
   acts_as_paranoid
 
-  has_many :track, as: :trackable
   belongs_to :project
 
   # 任务状态机

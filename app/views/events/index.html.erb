@@ -4,7 +4,7 @@
 <% @events.each do |e| %>
   <h2><%= e[:date] %></h2>
   <% e[:items].each do |item| %>
-    <h3><a href=<%= get_ancestor_show_path(item[:ancestor_id], item[:ancestor_type]) %> target="_blank"><%= item[:ancestor_name] %></a></h3>
+    <h3><a href=<%= get_tracking_obj_detail_url(item[:ancestor_id], item[:ancestor_type]) %> target="_blank"><%= item[:ancestor_name] %></a></h3>
     <% item[:events].each do |event| %>
       <%= render partial: 'detail', locals: { event: event } %>
     <% end %>

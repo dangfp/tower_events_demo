@@ -1,8 +1,4 @@
 module EventsHelper
-  def get_ancestor_show_path(ancestor_id, ancestor_type)
-    send("#{ancestor_type.downcase}_path", ancestor_id)
-  end
-
   def format_action_for_display(action, trackable_type, data)
     case action
     when 'create', 'destroy'
